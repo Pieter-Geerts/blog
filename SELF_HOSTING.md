@@ -1,6 +1,12 @@
 # Self-hosting on Proxmox
 
-This deployment assumes:
+This deployment supports two reverse-proxy layouts.
+
+If Nginx runs on the same VM as Docker, keep `HOST_BIND_IP=127.0.0.1` and use the file in [deploy/nginx/pietergeerts.eu.conf](deploy/nginx/pietergeerts.eu.conf).
+
+If Nginx Proxy Manager runs in a separate Proxmox container, create a dedicated blog LXC with [deploy/PROXMOX_LXC.md](deploy/PROXMOX_LXC.md), then configure proxy hosts with [deploy/NGINX_PROXY_MANAGER.md](deploy/NGINX_PROXY_MANAGER.md). In that setup, set `HOST_BIND_IP` to the blog LXC LAN IP so Nginx Proxy Manager can reach ports `3000` and `3001`.
+
+The same-VM Nginx deployment assumes:
 
 ```text
 Porkbun DNS -> UniFi port forwarding -> Proxmox VM -> host Nginx
@@ -8,7 +14,7 @@ Porkbun DNS -> UniFi port forwarding -> Proxmox VM -> host Nginx
                                                      -> 127.0.0.1:3001 Umami
 ```
 
-Use a dedicated Debian or Ubuntu VM for the site rather than installing Docker directly on the Proxmox host. Take a Proxmox snapshot before the first deployment and before database migrations.
+Use a dedicated Debian or Ubuntu VM/LXC for the site rather than installing Docker directly on the Proxmox host. Take a Proxmox snapshot before the first deployment and before database migrations.
 
 ## 1. Prepare DNS at Porkbun
 

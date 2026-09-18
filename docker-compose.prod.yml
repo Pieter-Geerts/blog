@@ -18,7 +18,7 @@ services:
       NEXT_PUBLIC_UMAMI_WEBSITE_ID: ${UMAMI_WEBSITE_ID}
       NEXT_PUBLIC_UMAMI_URL: https://analytics.pietergeerts.eu/script.js
     ports:
-      - "127.0.0.1:3000:3000"
+      - "${HOST_BIND_IP:-127.0.0.1}:3000:3000"
     volumes:
       - media-data:/app/media
     depends_on:
@@ -78,7 +78,7 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "127.0.0.1:3001:3001"
+      - "${HOST_BIND_IP:-127.0.0.1}:3001:3001"
     networks:
       - app-network
 
