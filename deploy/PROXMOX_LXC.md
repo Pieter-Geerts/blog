@@ -10,7 +10,7 @@ Run these commands on `proxarr` as `root`. The examples assume:
 - Template storage: `local`
 - Container disk storage: `local-lvm`
 
-Adjust the IP, gateway, bridge, and storage names to match your host.
+These values match the current `proxarr` storage and network layout. Before creating the container, confirm that `192.168.0.112` is not already used on your LAN.
 
 ## Check available IDs, storage, and network
 
@@ -18,9 +18,10 @@ Adjust the IP, gateway, bridge, and storage names to match your host.
 pct list
 pvesm status
 ip route
+ping -c 3 192.168.0.112
 ```
 
-If `112` is already used, pick the next free VMID.
+If `112` is already used, pick the next free VMID. If `ping` gets replies from `192.168.0.112`, choose another unused LAN IP and update the commands below.
 
 ## Download a Debian template
 
@@ -33,6 +34,7 @@ Download the current Debian 12 standard template shown by the previous command. 
 
 ```bash
 pveam download local debian-12-standard_12.7-1_amd64.tar.zst
+ls /var/lib/vz/template/cache/debian-12-standard_*_amd64.tar.zst
 ```
 
 ## Create the blog LXC
