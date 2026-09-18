@@ -12,6 +12,8 @@ import { Users } from './src/collections/Users';
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
+const databasePort = Number(process.env.POSTGRES_PORT || '5432');
+
 export default buildConfig({
   admin: {
     user: 'users',
@@ -19,8 +21,11 @@ export default buildConfig({
   collections: [Users, Media, Tags, Posts],
   db: postgresAdapter({
     pool: {
-      connectionString:
-        process.env.DATABASE_URL || 'postgres://postgres:postgres@127.0.0.1:5432/portfolio',
+      database: process.env.POSTGRES_DB || 'portfolio',
+      host: process.env.POSTGRES_HOST || '127.0.0.1',
+      password: process.env.POSTGRES_PASSWORD || 'postgres',
+      port: Number.isFinite(databasePort) ? databasePort : 5432,
+      user: process.env.POSTGRES_USER || 'postgres',
     },
   }),
   editor: lexicalEditor(),
