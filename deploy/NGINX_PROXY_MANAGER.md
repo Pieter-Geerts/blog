@@ -51,9 +51,12 @@ Start the services:
 
 ```bash
 docker compose --env-file .env.production -f docker-compose.prod.yml build app
+docker compose --env-file .env.production -f docker-compose.prod.yml run --rm migrate
 docker compose --env-file .env.production -f docker-compose.prod.yml up -d
 docker compose --env-file .env.production -f docker-compose.prod.yml ps
 ```
+
+The migration command initializes the Payload tables in the `portfolio` database before the app serves `/admin`.
 
 Listmonk initializes its own database tables during startup. If you previously saw Postgres errors like `relation "templates" does not exist`, pull the latest repository changes and recreate the Listmonk container:
 

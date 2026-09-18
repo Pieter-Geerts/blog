@@ -111,9 +111,12 @@ Start the stack:
 
 ```bash
 docker compose --env-file .env.production -f docker-compose.prod.yml build app
+docker compose --env-file .env.production -f docker-compose.prod.yml run --rm migrate
 docker compose --env-file .env.production -f docker-compose.prod.yml up -d
 docker compose --env-file .env.production -f docker-compose.prod.yml ps
 ```
+
+The app waits for the Payload migration service to complete successfully before it starts. This creates tables such as `users`, `posts`, `media`, and `payload_migrations` in the `portfolio` database.
 
 The Listmonk container installs and upgrades its database schema on startup with idempotent commands. This prevents startup loops with errors such as `relation "templates" does not exist`.
 
