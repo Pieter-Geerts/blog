@@ -115,6 +115,8 @@ docker compose --env-file .env.production -f docker-compose.prod.yml up -d
 docker compose --env-file .env.production -f docker-compose.prod.yml ps
 ```
 
+The Listmonk container installs and upgrades its database schema on startup with idempotent commands. This prevents startup loops with errors such as `relation "templates" does not exist`.
+
 ## Smoke test from the Proxmox host
 
 Exit the container, then run from `proxarr`:

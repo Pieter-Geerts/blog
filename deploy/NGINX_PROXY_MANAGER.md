@@ -55,6 +55,13 @@ docker compose --env-file .env.production -f docker-compose.prod.yml up -d
 docker compose --env-file .env.production -f docker-compose.prod.yml ps
 ```
 
+Listmonk initializes its own database tables during startup. If you previously saw Postgres errors like `relation "templates" does not exist`, pull the latest repository changes and recreate the Listmonk container:
+
+```bash
+git pull
+docker compose --env-file .env.production -f docker-compose.prod.yml up -d --force-recreate listmonk
+```
+
 From the Nginx Proxy Manager LXC, verify it can reach the blog LXC:
 
 ```bash
