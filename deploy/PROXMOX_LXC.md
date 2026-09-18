@@ -30,17 +30,20 @@ pveam update
 pveam available --section system | grep debian-12
 ```
 
-Download the current Debian 12 standard template shown by the previous command. Example:
+Download the current Debian 12 standard template shown by the previous command:
 
 ```bash
-pveam download local debian-12-standard_12.7-1_amd64.tar.zst
+TEMPLATE=$(pveam available --section system | awk '/debian-12-standard/ {print $2}' | tail -1)
+echo "$TEMPLATE"
+pveam download local "$TEMPLATE"
 ls /var/lib/vz/template/cache/debian-12-standard_*_amd64.tar.zst
 ```
 
 ## Create the blog LXC
 
 ```bash
-pct create 112 local:vztmpl/debian-12-standard_12.7-1_amd64.tar.zst \
+TEMPLATE=$(basename "$(ls -t /var/lib/vz/template/cache/debian-12-standard_*_amd64.tar.zst | head -1)")
+pct create 112 local:vztmpl/$TEMPLATE \
   --hostname blog \
   --unprivileged 1 \
   --features nesting=1,keyctl=1 \
