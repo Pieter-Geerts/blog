@@ -1,0 +1,2 @@
+CREATE DATABASE umami;
+CREATE DATABASE listmonk;

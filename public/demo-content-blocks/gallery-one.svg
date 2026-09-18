@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Gallery notebook</title>
+  <desc id="desc">Notebook-style editorial gallery tile.</desc>
+  <rect width="800" height="600" fill="#18181b"/>
+  <rect x="94" y="72" width="360" height="456" rx="26" fill="#f8f7f4"/>
+  <rect x="500" y="72" width="206" height="206" rx="26" fill="#c56a4a"/>
+  <rect x="500" y="322" width="206" height="206" rx="26" fill="#d8cfc1"/>
+  <path d="M154 170h240M154 236h188M154 302h236M154 368h140" stroke="#18181b" stroke-width="18" stroke-linecap="round"/>
+</svg>

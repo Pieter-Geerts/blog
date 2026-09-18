@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">A slower internet</title>
+  <desc id="desc">A quiet signal mark in ink, paper, and terracotta.</desc>
+  <rect width="64" height="64" rx="16" fill="#18181b"/>
+  <path d="M18 39.5C18 29.835 25.835 22 35.5 22c4.253 0 8.15 1.516 11.183 4.04" fill="none" stroke="#f8f7f4" stroke-linecap="round" stroke-width="5"/>
+  <path d="M18 39.5c0-5.247 4.253-9.5 9.5-9.5 2.484 0 4.745.954 6.438 2.512" fill="none" stroke="#c56a4a" stroke-linecap="round" stroke-width="5"/>
+  <circle cx="18" cy="40" r="4" fill="#f8f7f4"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">Wide content block</title>
+  <desc id="desc">A wide grid-like editorial image for a blog content block.</desc>
+  <rect width="1400" height="760" fill="#e7dfd2"/>
+  <rect x="80" y="80" width="1240" height="600" rx="32" fill="#f8f7f4"/>
+  <rect x="142" y="142" width="520" height="476" rx="24" fill="#18181b"/>
+  <rect x="718" y="142" width="540" height="130" rx="20" fill="#c56a4a"/>
+  <rect x="718" y="314" width="245" height="304" rx="20" fill="#d8cfc1"/>
+  <rect x="1014" y="314" width="244" height="304" rx="20" fill="#18181b"/>
+  <path d="M218 244h368M218 326h278M218 408h322M218 490h188" stroke="#f8f7f4" stroke-width="22" stroke-linecap="round"/>
+</svg>

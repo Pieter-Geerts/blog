@@ -1,0 +1,91 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: portfolio-app
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD}@db:5432/portfolio
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET}
+      NEXT_PUBLIC_SITE_URL: https://pietergeerts.eu
+      LISTMONK_URL: http://listmonk:9000
+      LISTMONK_API_USER: ${LISTMONK_API_USER:-}
+      LISTMONK_API_TOKEN: ${LISTMONK_API_TOKEN:-}
+      LISTMONK_LIST_UUID: ${LISTMONK_LIST_UUID:-}
+      UMAMI_WEBSITE_ID: ${UMAMI_WEBSITE_ID}
+      NEXT_PUBLIC_UMAMI_WEBSITE_ID: ${UMAMI_WEBSITE_ID}
+      NEXT_PUBLIC_UMAMI_URL: https://analytics.pietergeerts.eu/script.js
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - media-data:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  db:
+    image: postgres:16-alpine
+    container_name: portfolio-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: portfolio
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d portfolio"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - app-network
+
+  listmonk:
+    image: listmonk/listmonk:v5.0.2
+    container_name: portfolio-listmonk
+    restart: unless-stopped
+    environment:
+      LISTMONK_app__address: "0.0.0.0:9000"
+      LISTMONK_db__host: db
+      LISTMONK_db__port: 5432
+      LISTMONK_db__user: postgres
+      LISTMONK_db__password: ${POSTGRES_PASSWORD}
+      LISTMONK_db__database: listmonk
+      LISTMONK_db__sslmode: disable
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-latest
+    container_name: portfolio-umami
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD}@db:5432/umami
+      DATABASE_TYPE: postgresql
+      APP_SECRET: ${UMAMI_APP_SECRET}
+      DISABLE_TELEMETRY: "1"
+      PORT: 3001
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:3001:3001"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  media-data:

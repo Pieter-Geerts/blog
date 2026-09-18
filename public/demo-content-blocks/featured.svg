@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Editorial workspace</title>
+  <desc id="desc">Layered paper, image frames, and quiet design elements.</desc>
+  <rect width="1200" height="700" fill="#f8f7f4"/>
+  <rect x="94" y="88" width="1012" height="524" rx="38" fill="#18181b"/>
+  <rect x="150" y="144" width="350" height="412" rx="20" fill="#fffaf0"/>
+  <rect x="548" y="144" width="502" height="236" rx="20" fill="#c56a4a"/>
+  <rect x="548" y="420" width="230" height="136" rx="18" fill="#f8f7f4"/>
+  <rect x="818" y="420" width="232" height="136" rx="18" fill="#d8cfc1"/>
+  <path d="M198 226h238M198 286h180M198 346h244M198 406h142" stroke="#18181b" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="926" cy="262" r="62" fill="#f8f7f4"/>
+  <path d="M620 272c56-80 128-80 184 0s128 80 184 0" fill="none" stroke="#18181b" stroke-width="22" stroke-linecap="round"/>
+</svg>

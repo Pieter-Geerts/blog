@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Gallery image frame</title>
+  <desc id="desc">Framed editorial gallery tile with abstract landscape forms.</desc>
+  <rect width="800" height="600" fill="#f8f7f4"/>
+  <rect x="86" y="78" width="628" height="444" rx="30" fill="#18181b"/>
+  <circle cx="574" cy="202" r="60" fill="#c56a4a"/>
+  <path d="M138 432l156-164 112 112 100-84 156 136" fill="none" stroke="#f8f7f4" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M138 458h524" stroke="#d8cfc1" stroke-width="20" stroke-linecap="round"/>
+</svg>
