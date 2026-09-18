@@ -5,8 +5,8 @@
 - [ ] Set `NODE_ENV=production` for the deployed app.
 - [ ] Set a long, random `PAYLOAD_SECRET` and keep it outside source control.
 - [ ] Set `NEXT_PUBLIC_SITE_URL` and `metadataBase` to the real HTTPS URL.
-- [ ] Configure the production domain in `DOMAIN` and verify Caddy redirects HTTP to HTTPS.
-- [ ] Use a pinned, tested Docker image version instead of `latest` for Listmonk and Umami.
+- [ ] Configure the production domain and verify Nginx redirects HTTP and `www` to the canonical HTTPS address.
+- [ ] Use pinned, tested Docker image versions for Listmonk and Umami.
 - [ ] Run `npm run lint` and `npm run build` in CI before deployment.
 - [ ] Add health checks and restart policies for every production service.
 - [ ] Confirm the app, Payload admin, blog, favicon, and API routes work through the public domain.

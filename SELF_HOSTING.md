@@ -36,11 +36,11 @@ Give the VM a static DHCP lease or static LAN address so the forwarding rule doe
 Install Docker Engine and the Compose plugin on the VM, then copy or clone this repository to it. From the repository directory:
 
 ```bash
-cp .env.production.example .env.production
+cp deploy/env.production.example .env.production
 chmod 600 .env.production
 ```
 
-Edit `.env.production` and set long random values for `POSTGRES_PASSWORD`, `PAYLOAD_SECRET`, and `UMAMI_APP_SECRET`. Set the real Umami website ID after creating the website in Umami.
+Edit `.env.production` and set long random values for `POSTGRES_PASSWORD`, `PAYLOAD_SECRET`, and `UMAMI_APP_SECRET`. Leave `UMAMI_WEBSITE_ID` empty until you create the website in Umami, then set the real website ID and restart the app.
 
 ## 4. Start the production containers
 
@@ -81,6 +81,7 @@ Then install the final reverse-proxy configuration:
 ```bash
 sudo cp deploy/nginx/pietergeerts.eu.conf /etc/nginx/sites-available/pietergeerts.eu
 sudo ln -s /etc/nginx/sites-available/pietergeerts.eu /etc/nginx/sites-enabled/pietergeerts.eu
+sudo rm -f /etc/nginx/sites-enabled/default
 sudo nginx -t
 sudo systemctl reload nginx
 ```
