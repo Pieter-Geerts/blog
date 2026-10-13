@@ -25,6 +25,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
+      args:
+        NEXT_PUBLIC_UMAMI_URL: https://analytics.pietergeerts.eu/script.js
+        NEXT_PUBLIC_UMAMI_WEBSITE_ID: ${UMAMI_WEBSITE_ID:-}
     container_name: portfolio-app
     restart: unless-stopped
     environment:
@@ -98,7 +101,7 @@ services:
     container_name: portfolio-umami
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD}@db:5432/umami
+      DATABASE_URL: ${UMAMI_DATABASE_URL:?Set UMAMI_DATABASE_URL in .env.production}
       DATABASE_TYPE: postgresql
       APP_SECRET: ${UMAMI_APP_SECRET}
       DISABLE_TELEMETRY: "1"

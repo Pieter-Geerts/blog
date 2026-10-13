@@ -10,6 +10,8 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+ARG NEXT_PUBLIC_UMAMI_URL
+ARG NEXT_PUBLIC_UMAMI_WEBSITE_ID
 RUN npm run build
 
 FROM builder AS migrator

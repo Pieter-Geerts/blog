@@ -35,23 +35,27 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
-          {latestPosts.map((post) => (
-            <article key={post.id} className="rounded-2xl border border-zinc-200 bg-white p-5">
-              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-                {new Date(post.publishedAt).toLocaleDateString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                  year: 'numeric',
-                })}
-              </p>
-              <h3 className="mt-4 text-xl font-semibold tracking-tight text-zinc-900">
-                <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-zinc-600">{post.summary}</p>
-            </article>
-          ))}
-        </div>
+        {latestPosts.length ? (
+          <div className="grid gap-6 md:grid-cols-3">
+            {latestPosts.map((post) => (
+              <article key={post.id} className="rounded-2xl border border-zinc-200 bg-white p-5">
+                <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">
+                  {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+                </p>
+                <h3 className="mt-4 text-xl font-semibold tracking-tight text-zinc-900">
+                  <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-zinc-600">{post.summary}</p>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm leading-7 text-zinc-600">No notes published yet.</p>
+        )}
       </section>
 
       <section id="newsletter" className="border-t border-zinc-200 py-12">

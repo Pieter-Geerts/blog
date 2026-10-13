@@ -76,6 +76,8 @@ curl -I http://192.168.0.112:3001
 
 In Nginx Proxy Manager, create these proxy hosts.
 
+You mentioned that only the main-site proxy host currently exists. Umami needs a second proxy host for `analytics.pietergeerts.eu`; without it, requests for the script and dashboard will not reach port `3001`.
+
 For the main site:
 
 - Domain Names: `pietergeerts.eu`, `www.pietergeerts.eu`
@@ -117,6 +119,35 @@ Add this under Advanced:
 ```nginx
 client_max_body_size 10m;
 ```
+
+Add an `A` record for `analytics` pointing to the same public WAN IP as the main site. In Nginx Proxy Manager, request a certificate for `analytics.pietergeerts.eu` and enable Force SSL. After setting `UMAMI_WEBSITE_ID` in `.env.production`, rebuild the app so Next.js embeds the public tracking URL and website ID in the browser assets.
+
+Umami's `DATABASE_URL` must use a URL-encoded version of the Postgres password. After editing `POSTGRES_PASSWORD`, run this from the repository directory on the blog LXC to update the URL in the private env file without printing it:
+
+```bash
+node -e '
+const fs = require("node:fs");
+const path = ".env.production";
+const contents = fs.readFileSync(path, "utf8");
+const match = contents.match(/^POSTGRES_PASSWORD=(.*)$/m);
+if (!match) throw new Error("POSTGRES_PASSWORD is missing");
+const url = `UMAMI_DATABASE_URL=postgresql://postgres:${encodeURIComponent(match[1])}@db:5432/umami`;
+const updated = /^UMAMI_DATABASE_URL=/m.test(contents)
+    ? contents.replace(/^UMAMI_DATABASE_URL=.*$/m, url)
+    : `${contents.trimEnd()}\n${url}\n`;
+fs.writeFileSync(path, updated, { mode: 0o600 });
+'
+```
+
+Apply the env change and verify Umami starts:
+
+```bash
+docker compose --env-file .env.production -f docker-compose.prod.yml up -d --force-recreate umami
+docker compose --env-file .env.production -f docker-compose.prod.yml logs --tail=100 umami
+curl -I http://192.168.0.112:3001/script.js
+```
+
+After creating the analytics proxy host, verify `https://analytics.pietergeerts.eu/script.js` returns `200` and `https://analytics.pietergeerts.eu/` loads the Umami login/dashboard. Create a website in Umami for `pietergeerts.eu`, put its website ID in `.env.production`, rebuild/recreate `app`, then confirm the browser sends requests to `/api/send` on the analytics host.
 
 Do not expose Postgres `5432` or Listmonk `9000` in Nginx Proxy Manager.
 
